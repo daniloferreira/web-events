@@ -2,7 +2,7 @@
 
   <div>
     <button v-on:click="testingGet">
-      Test the get
+      Emit event
     </button>
 
     <div v-for="event in eventsResults" v-bind:key="event">
@@ -19,7 +19,8 @@ export default class TestingUiEvents extends Vue {
   eventsResults: String[] = []
 
   testingGet = () => {
-    fetch('http://localhost:3000/testing').then(response => response.text()).then(body => this.eventsResults.push(body))
+    const eventBody = JSON.stringify({ 'event-type': 'click', 'event-name': 'testing' })
+    fetch('http://localhost:3000/emit', { method: 'put', body: eventBody, headers: { 'Content-Type': 'application/json' } }).then(response => response.text()).then(body => this.eventsResults.push(body))
   }
 }
 </script>
